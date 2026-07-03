@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 from typing import List
 
+from services.llm_service import get_llm_response 
 router = APIRouter()
 
 # 요청 본문(Request Body) 모델
@@ -38,8 +39,23 @@ class AnalyzeResponse(BaseModel):
 
 def analyze_career(request: AnalyzeRequest):
 
-    """
+    
 
+   # 사용자 질문 구성
+    query = (
+        f"전공: {request.major}, "
+        f"보유 스킬: {', '.join(request.skills)}, "
+        f"관심 직무: {request.job_type}"
+        )
+
+    # llm_service 호출 (실습 8에서 Gemini + RAG로 교체)
+    result = get_llm_response(query=query, context_docs=[])
+
+    return AnalyzeResponse(
+        answer=result["answer"],
+        sources=result["sources"]
+        )
+    """
     사용자의 전공·스킬·관심 직무를 기반으로 취업·공모전 맞춤 분석을 제공한다.
 
     현재는 목업 응답을 반환하며, 실습 8에서 Gemini API와 연결한다.
