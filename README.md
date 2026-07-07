@@ -31,6 +31,22 @@
 
 | 실행 환경 | Docker |
 
+## 시스템 구조
+
+사용자 입력
+↓
+React UI
+↓
+FastAPI /analyze
+↓
+ChromaDB 검색 (RAG)
+↓
+Gemini 분석
+↓
+분석 결과 + 출처 반환
+↓
+ResultCard + SourceCard 렌더링
+
 
 ## 🚀 로컬 실행 방법
 
@@ -84,7 +100,7 @@ uvicorn main:app --reload
 * API 문서 확인: `http://localhost:8000/docs`
 * 공고 목록 API: `http://localhost:8000/jobs`
 
-현재 2일차 기준으로 `/health`, `/jobs`, `/analyze` 엔드포인트를 구현했으며, `MOCK_MODE=true` 설정 시 Gemini API 호출 없이 mock 응답으로 테스트할 수 있습니다.
+
 
 ## 진행 현황
 
@@ -114,6 +130,26 @@ uvicorn main:app --reload
     - Python, 딥러닝, ai에이전트
     나는 [통계학과 학생]이고 데이터 분석 직무에 관심이 있어.
 
-- [ ] 4일차: RAG 기반 서비스 + React UI
-
+- [x] 4일차: RAG 기반 서비스 + React UI
+    *Backend
+    ChromaDB 기반 문서 검색 기능 구현
+    search_documents() 구현
+    Gemini와 RAG 연동
+    /analyze API를 RAG 기반 응답으로 개선
+    answer + sources + confidence 반환
+    
+    *Frontend
+    React + Vite 프로젝트 구성
+    Tailwind CSS 적용
+    InputForm 컴포넌트 구현
+    ResultCard 컴포넌트 구현
+    SourceCard 컴포넌트 구현
+    fetch를 이용한 FastAPI 연동
+    분석 결과 및 출처 시각화
+    
+    *UI 설계
+    design-skill.md 작성
+    전문성 + 친근함 중심 디자인 적용
+    Blue + Slate 컬러 시스템 적용
+    Empty / Loading / Success / Error 상태 구분
 - [ ] 5일차: Docker + 포트폴리오 완성
