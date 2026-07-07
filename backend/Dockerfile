@@ -16,7 +16,11 @@ RUN pip install --no-cache-dir --retries 5 --timeout 60 -r requirements.txt
 # 5. 나머지 코드 복사
 # .env 파일은 복사하지 않습니다 — docker run 시 환경변수로 주입
 COPY . .
+
 RUN useradd -m appuser
+RUN mkdir -p /app/chroma_db
+RUN chown -R appuser:appuser /app
+
 USER appuser
 # 6. 포트 선언
 # 컨테이너 내부에서 8000번 포트를 사용한다고 선언
